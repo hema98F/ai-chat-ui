@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="content fade-in">
+  <div class="content">
     <!-- Upload Panel -->
 <div class="upload-panel" [class.uploaded]="uploadResult">
 
@@ -47,7 +47,7 @@
   </div>
 
   <!-- AFTER UPLOAD -->
-  <div *ngIf="uploadResult" class="upload-success fade-in">
+  <div *ngIf="uploadResult" class="upload-success">
     <span class="check">✅</span>
     <div>
       <strong>{{ uploadResult.filename }}</strong>
@@ -80,7 +80,7 @@
   </div>
 
   <!-- Profile Card -->
-  <div *ngIf="profile" class="profile-card fade-in">
+  <div *ngIf="profile" class="profile-card">
 
     <!-- Header -->
     <div class="profile-header">
@@ -123,7 +123,7 @@
     <div class="profile-section">
       <div class="section-label">EDUCATION</div>
       <!-- <p class="section-text">{{ profile.education | json}}</p> -->
-       <p class="section-text">{{ formatEducation(profile.education) }}</p>
+
     </div>
 
   </div>
@@ -163,7 +163,7 @@
 
         <!-- Loading -->
         <div *ngIf="isAsking" class="message-row ai-row">
-          <div class="bubble fade-in ai-bubble">
+          <div class="bubble ai-bubble">
             <span class="role-label">AI</span>
             <p class="thinking">Searching your resume...</p>
           </div>
