@@ -446,7 +446,8 @@ button:hover {
   line-height: 1.6;
 }
 .fade-in {
-  animation: fadeIn 0.6s ease-in-out;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
@@ -571,7 +572,6 @@ button:hover {
 }
 .header-title {
   background: linear-gradient(90deg, #2563eb, #f59e0b);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .avatar {
