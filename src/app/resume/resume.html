@@ -1,0 +1,191 @@
+<div class="resume-wrapper">
+  <!-- Header -->
+  <div class="header">
+    <a routerLink="/" class="back-btn">← Chat</a>
+    <div class="header-title">
+      <div class="dot"></div>
+      Resume AI
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Upload Panel -->
+<div class="upload-panel" [class.uploaded]="uploadResult">
+
+  <!-- BEFORE UPLOAD -->
+  <div *ngIf="!uploadResult && !isUploading">
+    <p class="panel-label">STEP 1 — UPLOAD YOUR RESUME</p>
+
+    <div class="file-drop">
+      <input
+        type="file"
+        accept=".pdf"
+        (change)="onFileSelected($event)"
+        id="fileInput"
+        hidden
+      />
+      <label for="fileInput" class="file-label">
+        {{ selectedFile ? selectedFile.name : '📄 Click to select PDF' }}
+      </label>
+    </div>
+
+    <button (click)="uploadPDF()" [disabled]="!selectedFile || isUploading" class="upload-btn">
+      Upload & Process
+    </button>
+
+    <!-- DEBUG -->
+    <p>isUploading: {{ isUploading }}</p>
+    <p>uploadResult: {{ uploadResult | json }}</p>
+  </div>
+
+
+  <div *ngIf="isUploading">
+    <button class="upload-btn" disabled>
+      Processing... please wait
+    </button>
+
+    <p class="hint">
+      Extracting text → chunking → embedding → saving to MongoDB...
+    </p>
+  </div>
+
+  <!-- AFTER UPLOAD -->
+  <div *ngIf="uploadResult" class="upload-success">
+    <span class="check">✅</span>
+    <div>
+      <strong>{{ uploadResult.filename }}</strong>
+      <p>{{ uploadResult.totalChunks }} chunks stored in MongoDB Atlas</p>
+    </div>
+
+    <button (click)="uploadResult = null" class="change-btn">
+      Change PDF
+    </button>
+  </div>
+
+</div>
+
+
+<!-- Profile Panel — shows after extraction -->
+<div class="profile-panel" *ngIf="uploadResult">
+
+  <!-- Extract button -->
+  <div *ngIf="!profile && !isExtracting" class="extract-section">
+    <p class="panel-label">OPTIONAL — EXTRACT STRUCTURED PROFILE</p>
+    <button class="extract-btn" (click)="extractProfile()">
+      ⚡ Extract Profile as JSON
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isExtracting" class="extracting">
+    <p class="panel-label">EXTRACTING PROFILE...</p>
+    <p class="hint">AI is parsing your resume...</p>
+  </div>
+
+  <!-- Profile Card -->
+  <div *ngIf="profile" class="profile-card">
+
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="avatar">{{ profile.name?.charAt(0) }}</div>
+      <div>
+        <h2 class="profile-name">{{ profile.name }}</h2>
+        <p class="profile-title">{{ profile.title }}</p>
+        <p class="profile-contact">{{ profile.email }} · {{ profile.phone }}</p>
+      </div>
+      <button (click)="profile = null" class="change-btn">✕</button>
+
+    </div>
+
+    <!-- Summary -->
+    <div class="profile-section">
+      <div class="section-label">SUMMARY</div>
+      <p class="section-text">{{ profile.summary }}</p>
+    </div>
+
+    <!-- Skills -->
+    <div class="profile-section">
+      <div class="section-label">SKILLS</div>
+      <div class="skills-list">
+        <span class="skill-tag" *ngFor="let skill of profile.skills">
+          {{ skill }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="profile-section" *ngIf="profile.projects?.length > 0">
+      <div class="section-label">PROJECTS</div>
+      <div class="project-item" *ngFor="let project of profile.projects">
+        <strong class="project-name">{{ project.name }}</strong>
+        <p class="project-desc">{{ project.description }}</p>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="profile-section">
+      <div class="section-label">EDUCATION</div>
+      <p class="section-text">{{ profile.education }}</p>
+    </div>
+
+  </div>
+</div>
+    <!-- Chat Panel -->
+    <div class="chat-panel" [class.disabled]="!uploadResult">
+      <p class="panel-label">STEP 2 — ASK QUESTIONS ABOUT YOUR RESUME</p>
+
+      <!-- Conversation -->
+      <div class="conversation">
+        <div *ngIf="conversation.length === 0" class="empty-state">
+          Upload your resume above, then ask things like:<br />
+          "What skills do I have?" · "Summarize my experience" · "Do I know React?"
+        </div>
+
+        <div
+          *ngFor="let msg of conversation"
+          class="message-row"
+          [class.user-row]="msg.role === 'user'"
+          [class.ai-row]="msg.role === 'assistant'"
+        >
+          <div
+            class="bubble"
+            [class.user-bubble]="msg.role === 'user'"
+            [class.ai-bubble]="msg.role === 'assistant'"
+          >
+            <span class="role-label">{{ msg.role === 'user' ? 'You' : 'AI' }}</span>
+            <p>{{ msg.content }}</p>
+
+            <!-- Sources -->
+            <div *ngIf="msg.sources && msg.sources.length > 0" class="sources">
+              <span class="sources-label">📎 source · score: {{ msg.sources[0].score }}</span>
+              <p class="source-preview">{{ msg.sources[0].preview }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <div *ngIf="isAsking" class="message-row ai-row">
+          <div class="bubble ai-bubble">
+            <span class="role-label">AI</span>
+            <p class="thinking">Searching your resume...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area" [class.disabled]="!uploadResult">
+        <textarea
+          [(ngModel)]="question"
+          (keydown)="onKeyDown($event)"
+          placeholder="Ask anything about your resume..."
+          rows="2"
+          [disabled]="!uploadResult || isAsking"
+        >
+        </textarea>
+        <button (click)="askQuestion()" [disabled]="!uploadResult || isAsking || !question.trim()">
+          {{ isAsking ? '...' : 'Ask' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
