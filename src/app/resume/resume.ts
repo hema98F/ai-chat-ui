@@ -41,15 +41,33 @@ export class Resume {
 
     this.isUploading = true;
     this.resumeService.uploadPdf(this.selectedFile).subscribe({
-      next: (res) => {
-        console.log('Upload result:', res);
+next: (res) => {
+  console.log('Upload result:', res);
 
-        this.uploadResult = { ...res };
-        this.isUploading = false;
+  this.uploadResult = { ...res };
+  this.isUploading = false;
 
-        this.conversation = [];
-        this.cd.detectChanges();
-      },
+  this.conversation = [];
+
+  // (AUTO EXTRACT PROFILE)
+  this.isExtracting = true;
+
+  this.resumeService.extractProfile(res.filename).subscribe({
+    next: (profileRes: any) => {
+      this.profile = profileRes.profile;
+      this.isExtracting = false;
+      console.log('Profile:', this.profile);
+      this.cd.detectChanges();
+    },
+    error: (err) => {
+      console.error('Extract error:', err);
+      this.isExtracting = false;
+      this.cd.detectChanges();
+    }
+  });
+
+  this.cd.detectChanges();
+},
       error: (err) => {
         console.error('Upload error:', err);
         this.isUploading = false;
