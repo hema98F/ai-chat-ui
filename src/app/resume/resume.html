@@ -122,7 +122,8 @@
     <!-- Education -->
     <div class="profile-section">
       <div class="section-label">EDUCATION</div>
-      <p class="section-text">{{ profile.education }}</p>
+      <!-- <p class="section-text">{{ profile.education | json}}</p> -->
+       <p class="section-text">{{ formatEducation(profile.education) }}</p>
     </div>
 
   </div>

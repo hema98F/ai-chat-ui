@@ -115,4 +115,15 @@ export class Resume {
       },
     });
   }
+
+  formatEducation(education: any): string {
+  if (!education) return 'Not specified';
+  if (typeof education === 'string') return education;
+  if (Array.isArray(education)) {
+    return education.map(e =>
+      typeof e === 'string' ? e : `${e.degree || ''} ${e.institution || ''} ${e.year || ''}`.trim()
+    ).join(' | ');
+  }
+  return JSON.stringify(education);
+}
 }
