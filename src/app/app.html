@@ -1,10 +1,16 @@
-<!-- Navbar — only show when logged in -->
-<nav class="navbar" *ngIf="authService.isLoggedIn()">
-  <div class="nav-brand">AI Resume Bot</div>
+<!-- Show navbar always, but change links based on auth -->
+<nav class="navbar">
+  <div class="nav-brand">⚡ AI Resume Bot</div>
   <div class="nav-links">
-    <a routerLink="/" class="nav-link">Chat</a>
-    <a routerLink="/resume" class="">Resume</a>
-    <button (click)="logout()" class="logout-btn">Logout</button>
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <a routerLink="/" class="nav-link">Chat</a>
+      <a routerLink="/resume" class="nav-link">Resume</a>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </ng-container>
+    <ng-container *ngIf="!authService.isLoggedIn()">
+      <a routerLink="/login" class="nav-link">Login</a>
+      <a routerLink="/register" class="nav-link">Register</a>
+    </ng-container>
   </div>
 </nav>
 
