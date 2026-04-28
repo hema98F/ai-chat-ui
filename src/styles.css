@@ -1,1 +1,130 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #0a0a0f;
+}
+.auth-wrapper {
+  min-height: 100vh;
+  background: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #0f0f1a;
+  border: 1px solid #1e1e3a;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.auth-header {
+  padding: 32px 32px 24px;
+  text-align: center;
+  border-bottom: 1px solid #1e1e3a;
+}
+
+.logo {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.auth-header h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin: 0 0 6px;
+}
+
+.auth-header p {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+}
+
+.auth-body {
+  padding: 28px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.error-msg {
+  background: #ff000015;
+  border: 1px solid #ff000040;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #ff6b6b;
+  font-size: 13px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #475569;
+  text-transform: uppercase;
+}
+
+.field input {
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field input:focus {
+  border-color: #00d4aa55;
+}
+
+.field input:disabled {
+  opacity: 0.4;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 13px;
+  background: #00d4aa;
+  color: #0a0a0f;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 4px;
+}
+
+.auth-btn:hover:not(:disabled) { opacity: 0.85; }
+.auth-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.switch-link {
+  text-align: center;
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+}
+
+.switch-link a {
+  color: #00d4aa;
+  text-decoration: none;
+}
+
+.switch-link a:hover { text-decoration: underline; }

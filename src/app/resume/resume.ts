@@ -8,7 +8,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './resume.html',
   styleUrl: './resume.css',
 })
@@ -34,6 +34,12 @@ export class Resume {
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     this.uploadResult = null;
+  }
+
+  changePdf(): void {
+    this.uploadResult = null;
+    this.profile = null; // clear profile
+    this.conversation = []; // clear chat
   }
 
   uploadPDF(): void {
@@ -117,13 +123,17 @@ export class Resume {
   }
 
   formatEducation(education: any): string {
-  if (!education) return 'Not specified';
-  if (typeof education === 'string') return education;
-  if (Array.isArray(education)) {
-    return education.map(e =>
-      typeof e === 'string' ? e : `${e.degree || ''} ${e.institution || ''} ${e.year || ''}`.trim()
-    ).join(' | ');
+    if (!education) return 'Not specified';
+    if (typeof education === 'string') return education;
+    if (Array.isArray(education)) {
+      return education
+        .map((e) =>
+          typeof e === 'string'
+            ? e
+            : `${e.degree || ''} ${e.institution || ''} ${e.year || ''}`.trim(),
+        )
+        .join(' | ');
+    }
+    return JSON.stringify(education);
   }
-  return JSON.stringify(education);
-}
 }

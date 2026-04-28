@@ -1,1 +1,11 @@
-<router-outlet/>
+<!-- Navbar — only show when logged in -->
+<nav class="navbar" *ngIf="authService.isLoggedIn()">
+  <div class="nav-brand">AI Resume Bot</div>
+  <div class="nav-links">
+    <a routerLink="/" class="nav-link">Chat</a>
+    <a routerLink="/resume" class="">Resume</a>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+</nav>
+
+<router-outlet />

@@ -247,26 +247,44 @@
 
 .input-area {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  background: #0a0a14;
+  border: 1px solid #1e1e3a;
+  border-radius: 12px;
+  padding: 8px;
+  gap: 8px;
 }
 
 .input-area.disabled {
   opacity: 0.4;
 }
 
-textarea[_ngcontent-ng-c3807381353] {
-    flex: 1;
-    background: white;
-    border: 1px solid #2a2a4a;
-    border-radius: 8px;
-    color: black;
-    padding: 10px 14px;
-    font-family: inherit;
-    font-size: 14px;
-    resize: none;
-    outline: none;
+.input-area textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: none;
+  outline: none;
 }
 
+.input-area button {
+  padding: 10px 16px;
+  background: #f59e0b;
+  color: #0a0a0f;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.input-area button:hover {
+  background: #d97706;
+}
 textarea:focus {
   border-color: #f59e0b44;
 }

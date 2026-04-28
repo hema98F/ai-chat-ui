@@ -1,12 +1,12 @@
 <div class="resume-wrapper">
   <!-- Header -->
-  <div class="header">
+  <!-- <div class="header">
     <a routerLink="/" class="back-btn">← Chat</a>
     <div class="header-title">
       <div class="dot"></div>
       Resume AI
     </div>
-  </div>
+  </div> -->
 
   <div class="content">
     <!-- Upload Panel -->
@@ -54,7 +54,7 @@
       <p>{{ uploadResult.totalChunks }} chunks stored in MongoDB Atlas</p>
     </div>
 
-    <button (click)="uploadResult = null" class="change-btn">
+    <button (click)="changePdf()" class="change-btn">
       Change PDF
     </button>
   </div>

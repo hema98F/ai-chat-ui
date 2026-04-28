@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResumeService {
-  // private baseUrl = 'http://localhost:4000';
+  private baseUrl = 'http://localhost:4000';
 
-  private baseUrl = 'https://ai-resume-bot-production-d7b2.up.railway.app';
+  // private baseUrl = 'https://ai-resume-bot-production-d7b2.up.railway.app';
 
   constructor(private http: HttpClient) {}
 
