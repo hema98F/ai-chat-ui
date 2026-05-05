@@ -5,6 +5,7 @@
     <ng-container *ngIf="authService.isLoggedIn()">
       <a routerLink="/" class="nav-link">Chat</a>
       <a routerLink="/resume" class="nav-link">Resume</a>
+      <a routerLink="/jobs" class="nav-link">Jobs</a>
       <button (click)="logout()" class="logout-btn">Logout</button>
     </ng-container>
     <ng-container *ngIf="!authService.isLoggedIn()">

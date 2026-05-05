@@ -1,1 +1,90 @@
-<p>jobs works!</p>
+<div class="jobs-wrapper">
+  <div class="header">
+    <a routerLink="/" class="back-btn">← Back</a>
+    <div class="header-title">
+      <div class="dot"></div>
+      AI Job Agent
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button [class.active]="activeTab === 'search'" (click)="activeTab = 'search'">
+        🔍 Find Jobs
+      </button>
+      <button [class.active]="activeTab === 'saved'" (click)="activeTab = 'saved'; loadSavedJobs()">
+        💾 Saved Jobs ({{ savedJobs.length }})
+      </button>
+    </div>
+
+    <!-- Search Tab -->
+    <div *ngIf="activeTab === 'search'">
+      <div class="search-panel">
+        <p class="panel-label">TELL THE AGENT WHAT TO FIND</p>
+        <div class="input-row">
+          <input
+            type="text"
+            [(ngModel)]="userMessage"
+            placeholder="Find Angular jobs and save the best ones"
+            [disabled]="isRunning"
+            (keydown.enter)="runAgent()" />
+          <button (click)="runAgent()" [disabled]="isRunning || !userMessage.trim()">
+            {{ isRunning ? 'Running...' : '⚡ Run Agent' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Agent Steps -->
+      <div *ngIf="steps.length > 0" class="steps-panel">
+        <p class="panel-label">AGENT STEPS</p>
+        <div class="step" *ngFor="let step of steps; let i = index">
+          <div class="step-header">
+            <span class="step-num">{{ i + 1 }}</span>
+            <span class="tool-name">{{ step.tool }}</span>
+          </div>
+          <div class="step-args">Args: {{ step.args | json }}</div>
+        </div>
+      </div>
+
+      <!-- Final Answer -->
+      <div *ngIf="finalAnswer" class="answer-panel">
+        <p class="panel-label">AGENT RESPONSE</p>
+        <p class="answer-text">{{ finalAnswer }}</p>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="isRunning" class="loading">
+        <p>🤖 Agent is working... this may take 30-60 seconds</p>
+        <p class="hint">Finding jobs → matching skills → saving best ones</p>
+      </div>
+    </div>
+
+    <!-- Saved Jobs Tab -->
+    <div *ngIf="activeTab === 'saved'">
+      <div class="saved-panel">
+        <p class="panel-label">SAVED JOBS ({{ savedJobs.length }})</p>
+        <div *ngIf="savedJobs.length === 0" class="empty">
+          No saved jobs yet. Run the agent to find matching jobs.
+        </div>
+        <div class="job-card" *ngFor="let job of savedJobs">
+          <div class="job-header">
+            <div>
+              <h3 class="job-title">{{ job.title }}</h3>
+              <p class="job-company">{{ job.company }} · {{ job.location }}</p>
+            </div>
+            <div class="match-score">{{ job.matchScore }}%</div>
+          </div>
+          <div class="skills-row">
+            <span class="skill-tag" *ngFor="let skill of job.skills">{{ skill }}</span>
+          </div>
+          <a *ngIf="job.url" [href]="job.url" target="_blank" class="apply-btn">
+            Apply →
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
